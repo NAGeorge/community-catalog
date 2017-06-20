@@ -1,30 +1,27 @@
-  apache:
-    image: rafaelcgstz/magento2
-    # build: .
-    ports:
-        - "80:80" # web
-        - "9001:9000" # xdebug
-        - "2222:22" # ssh
-        - "35729:35729" # live reload
-    links:
-      - db
-    volumes:
-      - ./magento2:/var/www/html
-      - ~/.composer:/root/.composer
-      - ~/.npm:/root/.npm
-      - ~/.nvm:/root/.nvm
+ mariadb:
+    image: 'bitnami/mariadb:latest'
     environment:
-      XDEBUG_CONFIG: "remote_host=dev.local"
-      PHP_IDE_CONFIG: "serverName=Docker"
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - 'mariadb_data:/bitnami/mariadb'
+  magento:
+    image: 'bitnami/magento:latest'
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - 'magento_data:/bitnami/magento'
+      - 'php_data:/bitnami/php'
+      - 'apache_data:/bitnami/apache'
+    depends_on:
+      - mariadb
 
-  db:
-    image: mariadb
-    ports:
-      - "3300:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=magento2
-      - MYSQL_USER=magento2
-      - MYSQL_PASSWORD=magento2
-    volumes:
-        - /var/lib/mysql # database files
+volumes:
+  mariadb_data:
+    driver: local
+  magento_data:
+    driver: local
+  apache_data:
+    driver: local
+  php_data:
+    driver: local
