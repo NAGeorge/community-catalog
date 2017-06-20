@@ -6,8 +6,6 @@
         - "9001:9000" # xdebug
         - "2222:22" # ssh
         - "35729:35729" # live reload
-    depends_on:
-      - db
     links:
       - db
     volumes:
