@@ -13,7 +13,7 @@
       type: "int"
 
     - variable: db_root_password
-      description: "public port to access the wordpress site"
+      description: "Its is your MysQL's root password"
       label: "MySQL root password"
       required: true
       type: "string"
