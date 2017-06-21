@@ -12,7 +12,12 @@
       default: "80"
       type: "int"
 
-
+    - variable: db_root_password
+      description: "public port to access the wordpress site"
+      label: "MySQL root password"
+      required: true
+      type: "string"
+      
 opencart:
 
 mysql:
